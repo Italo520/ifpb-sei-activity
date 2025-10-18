@@ -1,4 +1,4 @@
-import 'package:explora_jampa/screens/home_screen.dart';
+import 'package:explora_jampa/screens/auth_wrapper.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: AuthWrapper(),
     );
   }
 }

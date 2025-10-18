@@ -1,5 +1,7 @@
 import 'package:explora_jampa/models/badge.dart';
 import 'package:explora_jampa/models/user.dart';
+import 'package:explora_jampa/services/auth_service.dart';
+import 'package:explora_jampa/services/gamification_service.dart';
 import 'package:explora_jampa/services/profile_service.dart';
 import 'package:flutter/material.dart';
 
@@ -11,16 +13,30 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late Future<User> futureUser;
   late Future<List<Badge>> futureBadges;
+  final _profileService = ProfileService();
+  final _gamificationService = GamificationService();
+  final _authService = AuthService();
+  int? _userId;
 
   @override
   void initState() {
     super.initState();
-    futureUser = ProfileService().getUser();
-    futureBadges = ProfileService().getBadges();
+    _userId = _authService.jwtResponse?.id;
+    if (_userId != null) {
+      futureUser = _profileService.getUser(_userId!);
+      futureBadges = _gamificationService.getUserBadges(_userId!);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_userId == null) {
+      return Scaffold(
+        appBar: AppBar(title: Text('Perfil')),
+        body: Center(child: Text('Faça login para ver seu perfil.')),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Perfil'),

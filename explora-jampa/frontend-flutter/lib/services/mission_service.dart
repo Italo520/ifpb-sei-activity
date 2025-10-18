@@ -1,13 +1,21 @@
 import 'dart:convert';
 import 'package:explora_jampa/config.dart';
 import 'package:explora_jampa/models/mission.dart';
+import 'package:explora_jampa/services/auth_service.dart';
 import 'package:http/http.dart' as http;
 
 class MissionService {
   final String apiUrl = "${AppConfig.baseUrl}/missions";
+  final AuthService _authService = AuthService();
 
   Future<List<Mission>> getMissions() async {
-    final response = await http.get(Uri.parse(apiUrl));
+    final token = await _authService.getToken();
+    final response = await http.get(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Authorization': 'Bearer $token',
+      },
+    );
 
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
