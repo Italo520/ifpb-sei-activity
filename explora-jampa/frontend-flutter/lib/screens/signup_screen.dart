@@ -1,3 +1,4 @@
+import 'package:explora_jampa/screens/interests_screen.dart';
 import 'package:explora_jampa/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -19,10 +20,14 @@ class _SignupScreenState extends State<SignupScreen> {
         _emailController.text,
         _passwordController.text,
       );
-      // Voltar para a tela de login em caso de sucesso
-      Navigator.of(context).pop();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Registro bem-sucedido! Faça o login.')),
+      // Logar o usuário automaticamente após o registro
+      await _authService.login(
+        _usernameController.text,
+        _passwordController.text,
+      );
+      // Navegar para a tela de interesses
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => InterestsScreen()),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

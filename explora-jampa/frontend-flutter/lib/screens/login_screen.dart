@@ -1,4 +1,4 @@
-import 'package:explora_jampa/screens/home_screen.dart';
+import 'package:explora_jampa/screens/interests_screen.dart';
 import 'package:explora_jampa/screens/signup_screen.dart';
 import 'package:explora_jampa/services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +15,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _login() async {
     try {
-      final jwtResponse = await _authService.login(
+      await _authService.login(
         _usernameController.text,
         _passwordController.text,
       );
-      // Navegar para a tela principal em caso de sucesso
+      // Navegar para a tela de interesses em caso de sucesso
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => InterestsScreen()),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
