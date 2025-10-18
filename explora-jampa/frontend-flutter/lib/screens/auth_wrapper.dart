@@ -1,5 +1,5 @@
 import 'package:explora_jampa/screens/home_screen.dart';
-import 'package:explora_jampa/screens/login_screen.dart';
+import 'package:explora_jampa/screens/splash_screen.dart';
 import 'package:explora_jampa/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class AuthWrapper extends StatelessWidget {
         if (snapshot.hasData && snapshot.data != null) {
           return HomeScreen();
         } else {
-          return LoginScreen();
+          return SplashScreen();
         }
       },
     );
